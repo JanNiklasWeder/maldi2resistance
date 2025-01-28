@@ -34,24 +34,25 @@ class MultiLabelRocNan:
         class_names,
         device="cpu",
         create_csv: Union[str, Path, None] = None,
+        skip_list: list = None,
     ):
         if isinstance(create_csv, str):
             create_csv = Path(create_csv)
 
-        auc_roc_sum = 0
+        auc_roc_sum = []
         test_label_all = torch.tensor([]).to(device)
         output_all = torch.tensor([]).to(device)
         prediction = prediction.to(device)
         label = label.to(device)
         self.__allAUC = []
 
-        n_non_none_results = 0
-
         for i in range(len(class_names)):
             metric = BinaryROC(thresholds=self.thresholds)
             auRoc = BinaryAUROC(thresholds=self.thresholds)
 
             antibiotic = class_names[i]
+            if (skip_list != None) and (antibiotic in skip_list):
+                continue
 
             # create masked for NaNs and remove those out of the tensor
             mask = torch.isnan(label[:, i])
@@ -71,7 +72,7 @@ class MultiLabelRocNan:
             auc_roc = auRoc(output_part, test_labels_part)
             self.__allAUC.append(auc_roc)
 
-            auc_roc_sum += auc_roc.item()
+            auc_roc_sum.append(auc_roc.item())
 
             metric.update(output_part, test_labels_part)
             fpr, tpr, thresholds = metric.compute()
@@ -89,11 +90,9 @@ class MultiLabelRocNan:
                 self.__results[antibiotic] = None
                 continue
 
-            n_non_none_results += 1
-
         auRoc = BinaryAUROC(thresholds=self.thresholds)
 
-        self.__macro = auc_roc_sum / n_non_none_results
+        self.__macro = sum(auc_roc_sum)/len(auc_roc_sum)
         self.__micro = auRoc(output_all, test_label_all.int()).item()
 
         if create_csv is not None:
@@ -105,6 +104,9 @@ class MultiLabelRocNan:
                 writer.writeheader()
 
                 for c in class_names:
+                    if (skip_list != None) and (c in skip_list):
+                        continue
+
                     result = self.__results[c]
 
                     if result is None:

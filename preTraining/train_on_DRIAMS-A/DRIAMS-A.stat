@@ -1,0 +1,4 @@
+,Amikacin,Amoxicillin-Clavulanic acid,Ampicillin-Amoxicillin,Cefazolin,Cefepime,Cefpodoxime,Ceftazidime,Ceftriaxone,Cefuroxime,Ciprofloxacin,Clindamycin,Colistin,Cotrimoxazole,Ertapenem,Erythromycin,Fosfomycin-Trometamol,Fusidic acid,Gentamicin,Imipenem,Levofloxacin,Meropenem,Nitrofurantoin,Norfloxacin,Oxacillin,Penicillin,Piperacillin-Tazobactam,Rifampicin,Teicoplanin,Tetracycline,Tobramycin
+positive,975,9920,21966,4223,6518,2338,2455,7299,4475,7462,3637,2850,4872,288,4529,1326,3413,2303,6872,3973,5145,412,871,4641,9881,6546,542,226,3082,1695
+negative,16247,15308,4905,5813,21958,4382,14937,19246,6103,23081,7975,15483,21768,14465,6550,4803,7224,8276,22519,16811,24386,1696,5234,6344,3525,21852,10424,7465,6836,16495
+n_sum,17222,25228,26871,10036,28476,6720,17392,26545,10578,30543,11612,18333,26640,14753,11079,6129,10637,10579,29391,20784,29531,2108,6105,10985,13406,28398,10966,7691,9918,18190

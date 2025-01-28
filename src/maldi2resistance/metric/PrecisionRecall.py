@@ -36,6 +36,7 @@ class MultiLabelPRNan:
         class_names,
         device="cpu",
         create_csv: Union[str, Path, None] = None,
+        skip_list: list = None,
     ):
         if isinstance(create_csv, str):
             create_csv = Path(create_csv)
@@ -52,8 +53,9 @@ class MultiLabelPRNan:
             metric = BinaryPrecisionRecallCurve(thresholds=self.thresholds)
             auPR = BinaryAveragePrecision(thresholds=self.thresholds)
 
-
             antibiotic = class_names[i]
+            if (skip_list != None) and (antibiotic in skip_list):
+                continue
 
             mask = torch.isnan(label[:, i])
             test_labels_part = label[~mask][:, i]
@@ -125,6 +127,9 @@ class MultiLabelPRNan:
                 writer.writeheader()
 
                 for c in class_names:
+                    if (skip_list != None) and (c in skip_list):
+                        continue
+
                     result = self.__results[c]
 
                     if result is None:

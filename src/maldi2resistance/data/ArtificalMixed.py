@@ -36,12 +36,21 @@ class ArtificialMixedInfection (Dataset):
         ("Staphylococcus cohnii", "Staphylococcus petrasii"),
     ]
 
-    def __init__(self, dataset: Union[Driams, Subset], generator_seed = None, use_percent_of_data: Optional[float] = None):
+    def __init__(self, dataset: Union[Driams, Subset],
+                        generator_seed = None,
+                        use_percent_of_data: Optional[float] = None,
+                        mix_ratio: Optional[float] = 0.5):
         """
 
         :param dataset:
         :param generator_seed:
-        :param use_percent_of_data: Define this number to use random mixtures that are not based on real observations. According to the specified percentage in comma notation, two random splits are created from the original data set and combined at random. Thus, when using 0.4, 40% of the original data is mixed, i.e. two splits of 20% each are merged. This means that a maximum of one dataset containing 50% of the data points of the original dataset can be created.
+        :param use_percent_of_data: Define this number to use random mixtures 
+            that are not based on real observations. According to the specified
+            percentage in comma notation, two random splits are created from
+            the original data set and combined at random.
+            Thus, when using 0.4, 40% of the original data is mixed,
+            i.e. two splits of 20% each are merged. This means that a maximum
+            of one dataset containing 50% of the data points of the original dataset can be created.
         """
         generator = numpy.random.default_rng(seed=generator_seed)
         gen = torch.Generator()
@@ -95,8 +104,8 @@ class ArtificialMixedInfection (Dataset):
                     spectrum_first, label_first = first_spectra[idx_first]
                     spectrum_second, label_second = second_spectra[idx_second]
 
-                    combined_spectrum = torch.add(spectrum_first, spectrum_second)
-                    combined_spectrum = torch.div(combined_spectrum, 2)
+                    combined_spectrum = torch.add(mix_ratio * spectrum_first, (1-mix_ratio) * spectrum_second)
+                    #combined_spectrum = torch.div(combined_spectrum, 2)
 
                     combined_label = torch.add(label_first, label_second)
                     combined_label = torch.div(combined_label, 2)

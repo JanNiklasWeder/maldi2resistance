@@ -7,8 +7,8 @@ import polars
 import os
 import pandas as pd
 import torch
-from chemprop.data import MoleculeDatapoint
-from chemprop.featurizers import SimpleMoleculeMolGraphFeaturizer
+
+
 from maldi_learn.vectorization import BinningVectorizer
 from polars.type_aliases import SchemaDefinition
 from sklearn.model_selection import KFold
@@ -521,11 +521,10 @@ class Driams(Dataset):
             else:
                 spectrum = polars.read_csv(path, separator=" ", comment_prefix="#")
 
-            # ToDo could cause problems if spectra is not trimmed beforehand
             min_range = min(spectrum["mass.spectra."])
-            min_range = min(min_range, self.transform.min_bin)
+            min_range = max(min_range, self.transform.min_bin)
             max_range = max(spectrum["mass.spectra."])
-            max_range = max(max_range, self.transform.max_bin)
+            max_range = min(max_range, self.transform.max_bin)
 
             bin_edges_ = np.linspace(min_range, max_range, self.transform.n_bins + 1)
 
@@ -617,11 +616,13 @@ class DriamsSingleAntibiotic(Dataset):
         self.driams = driams
         self.data = []
         self.fp_lookup = FingerprintLookup()
+        from chemprop.featurizers import SimpleMoleculeMolGraphFeaturizer
         self.featurizer = SimpleMoleculeMolGraphFeaturizer()
         self.spectra_lookup = {}
         self.mol_lookup = {}
 
         if prepeare4chemprop:
+            from chemprop.data import MoleculeDatapoint
             self.__return_from_idx = self.__get4Chemprop
 
             for antibiotic_name in self.driams.selected_antibiotics:

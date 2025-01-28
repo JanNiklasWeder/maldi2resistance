@@ -1,0 +1,4 @@
+,Ampicillin,Ampicillin+Sulbactam,Cefotaxim,Ceftazidime,Ceftriaxone,Ciprofloxacin,Clindamycin,Cotrimoxazole,Erythromycin,Fosfomycin,Gentamicin,Imipenem,Levofloxacin,Meropenem,Moxifloxacin,Oxacillin,PenicillinG,Piperacillin-Tazobactam,Tetracycline,Vancomycin
+positive,8045,6450,1203,2937,597,3267,5459,5257,5475,1849,12669,3938,1599,515,2808,1868,5883,3343,1356,330
+negative,7465,5944,9931,8980,4852,9245,5381,14354,4098,7920,4800,11342,4224,11917,5045,3804,1885,8624,4625,10551
+n_sum,15510,12394,11134,11917,5449,12512,10840,19611,9573,9769,17469,15280,5823,12432,7853,5672,7768,11967,5981,10881

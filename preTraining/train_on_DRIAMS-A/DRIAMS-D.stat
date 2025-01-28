@@ -1,0 +1,4 @@
+,Amoxicillin-Clavulanic acid,Ampicillin,Cefepime,Ceftazidime,Ceftriaxone,Ciprofloxacin,Erythromycin,Fosfomycin,Gentamicin,Imipenem,Penicillin,Piperacillin-Tazobactam,Tetracycline
+positive,1516,4840,337,555,529,1141,702,1460,495,552,1826,573,299
+negative,5080,2037,6607,6375,6089,8676,1729,8156,9531,6263,349,6284,2747
+n_sum,6596,6877,6944,6930,6618,9817,2431,9616,10026,6815,2175,6857,3046
